@@ -1,3 +1,10 @@
-# Computer Structures and Operating System
+# Computer Structures and Operating System [Lab]
 
-Some files Here
+The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/CompLab_f_18I/](http://www.eng.tau.ac.il/~marko/CompLab_f_18I/)
+
+## Environment Setup
+..* Windows 10 
+..* Xilink ISE Design Suite 14.7 (Win7 version)
+
+## Lab Session Files
+### 1. Introduction
