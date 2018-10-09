@@ -8,5 +8,5 @@ The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/Comp
 
 ## Lab Session Files
 ### 1. Introduction
-  * small example on how to use the design suite *decoder_v25*
-  * lab work 1 *part2_A1*
+  * small example on how to use the design suite : *decoder_v25.zip*
+  * lab work 1 : *part2_A1.zip*
