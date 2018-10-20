@@ -1,152 +1,93 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    13:48:10 10/16/2018 
--- Design Name: 
--- Module Name:    resa_bus - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- Vhdl test bench created from schematic D:\projects\a_dlx\buses\logic_set.sch - Tue Jul 03 16:29:17 2012
 --
--- Dependencies: 
+-- Notes: 
+-- 1) This testbench template has been automatically generated using types
+-- std_logic and std_logic_vector for the ports of the unit under test.
+-- Xilinx recommends that these types always be used for the top-level
+-- I/O of a design in order to guarantee that the testbench will bind
+-- correctly to the timing (post-route) simulation model.
+-- 2) To use this template as your testbench, change the filename to any
+-- name of your choice with the extension .vhd, and use the "Source->Add"
+-- menu in Project Navigator to import the testbench. Then
+-- edit the user defined section below, adding code to generate the 
+-- stimulus for your design.
 --
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+LIBRARY UNISIM;
+USE UNISIM.Vcomponents.ALL;
+ENTITY logic_set_logic_set_sch_tb IS
+END logic_set_logic_set_sch_tb;
+ARCHITECTURE behavioral OF logic_set_logic_set_sch_tb IS 
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+   COMPONENT logic_set
+   PORT( RESET	:	IN	STD_LOGIC; 
+          READD	:	OUT	STD_LOGIC_VECTOR (31 DOWNTO 0); 
+          STS	:	OUT	STD_LOGIC_VECTOR (3 DOWNTO 0); 
+          CLK	:	IN	STD_LOGIC; 
+          step_en	:	IN	STD_LOGIC; 
+          W_instr	:	IN	STD_LOGIC; 
+          R_instr	:	IN	STD_LOGIC);
+   END COMPONENT;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
-entity resa_bus is
-    Port ( A : out  STD_LOGIC_VECTOR (31 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"; 
-				--address from resa-bus to SLV 
-           D : inout  STD_LOGIC_VECTOR (31 downto 0); --data to&from resa-bus to SLV
-           rd_req : in  STD_LOGIC; -- from CPU to resa-bus
-           wr_req : in  STD_LOGIC; --from CPU to resa-bus
-           busy : in  STD_LOGIC; --from CPU to resa-bus : instruction begin
-           done : out  STD_LOGIC := '0'; --resa-bus to CPU
-			  CLK : in STD_LOGIC; 
-			  AO : in STD_LOGIC_VECTOR (31 downto 0); --address from CPU to resa-bus
-			  DO : in STD_LOGIC_VECTOR (31 downto 0); --data from CPU to resa-bus
-			  DI : out STD_LOGIC_VECTOR (31 downto 0) := X"00000000"; 
-			  --data to resa-bus to CPU
-			  as_n: out STD_LOGIC :='1'; --inform slave transaction begin
-			  wr_n : out STD_LOGIC :='1'; --inform slave of write request
-			  ack_n : in STD_LOGIC :='1'; --SLV to resa-bus : transaction complete
-			  in_init: out STD_LOGIC := '1' --resa-bus to SLV : instruction begin
-			  );
-end resa_bus;
-
-architecture Behavioral of resa_bus is
-	signal R_AD:STD_LOGIC_VECTOR (31 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"; 
-	--register to hold address
-	signal R_DO:STD_LOGIC_VECTOR (31 downto 0) := "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"; 
-	--register to hold data from CPU to slave
-	signal R_DI:STD_LOGIC_VECTOR (31 downto 0) := X"00000000"; 
-	--register to hold data from slave to CPU
-	signal CE0:STD_LOGIC :='0' ; --CE for R_DI
-	signal CE1:STD_LOGIC :='0' ; --CE for R_DO
-	signal CE2:STD_LOGIC :='0' ; --CE for R_AD
-	signal DE2:STD_LOGIC :='0'; --gate for address
-	signal DE1:STD_LOGIC :='0'; --gate for dataIO gate, default is readIO
+   SIGNAL RESET	:	STD_LOGIC;
+   SIGNAL READD	:	STD_LOGIC_VECTOR (31 DOWNTO 0);
+   SIGNAL STS	:	STD_LOGIC_VECTOR (3 DOWNTO 0);
+   SIGNAL CLK	:	STD_LOGIC;
+   SIGNAL step_en	:	STD_LOGIC;
+   SIGNAL W_instr	:	STD_LOGIC;
+   SIGNAL R_instr	:	STD_LOGIC;
 	
-	signal INIT:STD_LOGIC := '1'; --keeps track of instruction 
-	signal TRANS:STD_LOGIC := '1'; --keeps track of transaction
-	signal WRIT_N:STD_LOGIC := '1'; --replica of wr_n
-	signal DO_SMTH:STD_LOGIC := '0'; --do something (wr_req or rd_req)
+	signal temp : std_logic := '0';
+	CONSTANT OPERATION : STD_LOGIC_VECTOR (1 DOWNTO 0) := "01" ;
+	-- set value of the constant OPERATION to define the desired transaction:
+   -- 00: NO OPERATION, 01: READ, 10: WRITE, 11 READ AFTER WRITE
+BEGIN
+
+   UUT: logic_set PORT MAP(
+		RESET => RESET, 
+		READD => READD, 
+		STS => STS, 
+		CLK => CLK, 
+		step_en => step_en, 
+		W_instr => W_instr, 
+		R_instr => R_instr
+   );
+
+-- *** Test Bench - User Defined Section ***
+  CLK_process :process
+   begin
+		CLK <= '1';
+		wait for 100 ns;
+		CLK <= '0';
+		wait for 100 ns;
+   end process;
 	
-begin
-
------------------------------------ All Time Runners ----------------------------------------------------
-in_init<='0' when busy = '1' else '1';
-INIT<='0' when busy = '1' else '1'; --write op
-
-DI<=R_DI; --connect register R_DI to CPU's data_in
-
-DO_SMTH<='1' when (wr_req or rd_req) = '1' else '0'; --a trigger for doing something request
-
---Loading address before tansaction begin
-CE2<='1' when DO_SMTH='1' else '0'; --clock enable for address register
-
---Loading data before transaction begin
-CE1<='1' when DO_SMTH='1' and wr_req = '1' else '0'; 
-	--when write request is HIGH, clock enabled for R_DO register
-
---Routing the dataIO path
-	--WRITING 
-	CE1<='1' when wr_req = '1' else '0'; --sets CE1 for the R_DO for the data to write 
-	DE1<='1' when WRIT_N = '0' else '0'; --when wr_n is set to WRITE, then DE1 outputs stored value
-
---For Reading
-	CE0<='1' when WRIT_N = '1' and ack_n = '0' else '0'; --Immediately read data from SLV to R_DI register
-
---Send 'Done' when ack_n is recieved
-	done<='1' when ack_n = '0' else '0'; --follows exactly as the negation of ack_n
-
-
------------------------------------ Trigger for Registers----------------------------------------------------
-
-
-A<=R_AD when DE2='1' else "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ";
-D<=R_DO when DE1='1' else (others=>'Z');
-
-
-R_AD_trigger : process(clk,CE2)
-	begin
-		if clk'event and clk='1' then
-			if CE2='1' then R_AD<=AO; else R_AD<=R_AD; end if;
-			--if CE2 is HIGH, store AO value into register, otherwise, store prev value
-		end if;
-	end process;
-
-dataIO_trigger : process(clk,CE1,CE0) 
-	begin
-		if clk'event and clk='1' then
-			if CE1='1' then R_DO<=DO; else R_DO<=R_DO; end if; --for write oper.
-			if CE0='1' then R_DI<=D; else R_DI<=R_DI; end if; --for read oper.
-		end if;
-	end process;
-
-------------------------------------------------------------------------------------------
-assertion : process(clk) --handles when the CPU sends intruction to resa-bus
-	begin
 	
-	if clk'event and clk='1' then
-		if INIT='0' then
-			if DO_SMTH='1' then --haven't entered transaction yet
-				wr_n<=not(wr_req); --set write request (output use)
-				WRIT_N <=not(wr_req); --for internal use (replica of above) 
-				DE2<='1'; --enable address register to start outputting address
-				as_n<='0'; --send assertion signal
-				TRANS<='0'; --entered transaction
-			
-			elsif ack_n='0' then
-				DE2<='0'; --reset the address output to SLV
-				
-				wr_n<='1'; --reset the WR port
-				WRIT_N<='1';
-				
-				as_n <='1'; --resets the AS port
-				TRANS<='1';
-				
-			end if;
-		end if;
+   tb : PROCESS
+   BEGIN
+	IF temp = '0' then
+	              R_instr <= OPERATION(0);
+	              W_instr <= OPERATION(1);
+	              step_en <= '0';
+	              RESET <= '1';
+	              temp <= '1';
+	    WAIT for 2ns;
+       WAIT for 200 ns;
+	               else
+	               step_en <= '1';
+	               RESET <= '0';
+	     WAIT for 200 ns;
+	               step_en <= '0';
+	     IF OPERATION(1 DOWNTO 0) = "11" 
+		             THEN WAIT for 4000 ns;
+                   ELSE WAIT for 2000 ns;						 
+		  END IF;
 	end if;
-	
-	end process;
+		
+	--WAIT; will wait forever
+   END PROCESS;
+-- *** End Test Bench - User Defined Section ***
 
-------------------------------------------------------------------------------------------
-end Behavioral;
-
+END;
