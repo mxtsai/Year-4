@@ -13,4 +13,5 @@ The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/Comp
   * lab work 1 : [*part2_A1.zip*](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab1/part2_A1.zip)
 ### 2. RESA Bus Interface
   * coded the RESA bus interface in VHDL : [*resa_bus.vhd*](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab2/resa_bus.vhd)
+  * timing diagram for read/write/write&read : [*resa_bus.pdf*](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab2/resa_bus.pdf)
   * lab work 2 : [*buses.zip*](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab2/buses.zip)
