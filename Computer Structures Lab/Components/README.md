@@ -71,5 +71,5 @@ Ouput : `DOUT[31:0]` , `STS[7:0]`
 ![Image of Logic Analyzer](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/la.png)  
 
 Notice:   
-  1. `cnt_o[4:0]` is still '0' on the falling edge of `in_init` and `step_en`   
+  1. `cnt_o[4:0]` is still '0' on the falling edge of `in_init` and `step_en`, so writing to RAM starts at address '0'
   2. `STS[7:0]` (STATUS signal) is "000" & `counter[4:0]` concatentated 
