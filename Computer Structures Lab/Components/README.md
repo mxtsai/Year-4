@@ -36,10 +36,12 @@ All slaves share the same `WR_IN_N` and `CARD_SEL` signals, and that's why `BA[2
   
   `WR_IN_N` : when master wants to write => '0' / else (including read) => '1'  
               (for master talking to slave monitor, it is always '1' since masters (RESA) isn't writing anything to slave (monitoring slave))   
-  `CARD_SEL` : when address `AI[9:0]`is available => '1' / else => '0'  
+  `CARD_SEL` : when address `AI[9:0]`is available and master ready to read SDO[31:0] => '1' / else => '0'  
   `BA[2:0]` : the 3-bit identifier for the slave (explanation above)  
   
   `SACK_N` : goes to '0' for 1 CC when read is finished \ else '1' 
+  
+  * `CARD_SEL` goes to '1' first, and waits for the `SACK_N` signal to go to '0', then `CARD_SEL` and `SACK_N` both go to '1' on the next CC  
 
 
 ## RAMx32
