@@ -1,5 +1,5 @@
 # Computer Structures and Operating System [Lab]
-*Done with significant guidance from Leo Katz*
+*Done with significant guidance from [Leo Katz](leokatz@mail.tau.ac.il)*
 
 The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/CompLab_f_18I/](http://www.eng.tau.ac.il/~marko/CompLab_f_18I/)
 
