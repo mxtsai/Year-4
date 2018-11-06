@@ -23,7 +23,7 @@ To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access e
   |       in1           | 0000000000 (= 0 dec) |  0x000  |   ramvalue      |
   |       in2           | 0000100000 (=32) |  0x020  |   stepnum       |
   |       in3           | 0001000000 (=64) |  0x040  |   idstate       |
-  |       in4           | 0010000000 (=128) |  0x060  |   regwrite      |
+  |       in4           | 0001100000 (=96) |  0x060  |   regwrite      |
 
 
 ## Slave Control
@@ -64,7 +64,7 @@ All slaves share the same `WR_IN_N` and `CARD_SEL` signals, and that's why `BA[2
   
   ![Altering 'WE' ](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/RAM_Runtime-1.jpg)
   
-         
+  
 ## Logic Analyzer
 
 Input : `STEP_EN`, `IN_INIT`, `STOP_N`  
@@ -75,3 +75,17 @@ Ouput : `DOUT[31:0]` , `STS[7:0]`
 Notice:   
   1. `cnt_o[4:0]` is still '0' on the falling edge of `in_init` and `step_en`, so writing to RAM starts at address '0'
   2. `STS[7:0]` (STATUS signal) is "000" & `counter[4:0]` concatentated 
+  3. In this above example, '10' is being written into RAM[6] (ending of STOP_N)  
+  
+## Monitoring Slave
+
+Input : 
+  * Data : `Monitor_Data[31:0]`, `Input1[31:0]`, `Input2[31:0]`  
+  * System :  `CLK`, `STEP_ENAB`, `IN_INITIAL`, `STOPN`   
+  * Read Op. : `AI[9:0]`, `CARD_SELECT`, `WRIT_IN`  
+
+Output: `S_DOUT`,`S_ACK_OUT`
+
+![Image of Monitoring Slave](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/monitor_slave-1.jpg)
+
+The test bench code is [here](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab4/Monitor_Slave_Test.vhd). It is commented with quite some details, and it corresponds with the screeshot above.
