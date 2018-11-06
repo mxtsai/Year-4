@@ -1,5 +1,23 @@
 # Description of Components 
 
+## SDRAM Partitioning
+`AI[9:0]` is divided into : `BA[2:0]|PA[1:0]|WA[4:0]`  
+Our SDRAM has 2^10 = 1024 addresses of 32 bit length each.  
+
+We partition the 1024 addresses into 2^3=8 **blocks** (aka. slave ID) ==> each **block** has 1024/8 = 128 addresses to choose from.  
+We split the 128 addresses into 2^2 = 4 **pages** (aka. categories) ==> each **page** has 128/4 = 32 addresses.   
+To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access each individual address of 32-bit length.
+
+
+## Slave Control
+  Inputs: `BA[2:0]`,`CARD_SEL`,`WR_IN_N`  
+  Outputs: `SACK_N`
+  
+  `WR_IN_N` : when master wants to write => '0' / else (including read) => '1' 
+  `CARD_SEL` : when address `AI[9:0]`is available => '1' / else => '0'
+  `BA[2:0]` : the 3-bit identifier for the slave
+
+
 ## RAMx32
 
   Configuration:  
