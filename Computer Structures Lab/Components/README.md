@@ -59,5 +59,7 @@ To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access e
   ![Altering 'WE' ](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/RAM_Runtime-1.jpg)
   
          
-         
+## Logic Analyzer
+
+
   
