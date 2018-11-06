@@ -31,6 +31,7 @@ To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access e
   Outputs: `SACK_N`
   
   `WR_IN_N` : when master wants to write => '0' / else (including read) => '1'  
+              (for slave monitor, it is always '1' since masters (RESA) isn't writing anything to slave (monitoring slave)) 
   `CARD_SEL` : when address `AI[9:0]`is available => '1' / else => '0'  
   `BA[2:0]` : the 3-bit identifier for the slave (explanation above)  
   
