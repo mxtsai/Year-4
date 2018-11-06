@@ -1,5 +1,12 @@
 # Description of Components 
 
+## Master Signals
+
+`Step_En` : will be '1' for one CC when master is about to begin a (set of) instruction \ else '0'  
+`In_Init` : will be '0' on the falling edge of `Step_En` \ will be '1' one CC after `ACK` signal is sent back from slave \ is '1' when idle  
+
+
+
 ## SDRAM Partitioning
 `AI[9:0]` is divided into : `BA[2:0]|PA[1:0]|WA[4:0]`  
 Our SDRAM has 2^10 = 1024 addresses of 32 bit length each.  
