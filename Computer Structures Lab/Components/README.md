@@ -8,14 +8,26 @@ We partition the 1024 addresses into 2^3=8 **blocks** (aka. slave ID) ==> each *
 We split the 128 addresses into 2^2 = 4 **pages** (aka. categories) ==> each **page** has 128/4 = 32 addresses.   
 To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access each individual address of 32-bit length.
 
+  * For the monitor-slave in HO3, we decided to use BA="000" as the ID of the slave.  
+  Therefore, we set the following addresses for the corresponding input to the monitor slave  
+  
+  | Monitor Slave Input | Address (Binary) | Address (Hex) | Name (for RESA) |
+  |---|---|---|---|
+  |       in1           | 0000000000 (= 0 dec) |  0x000  |   ramvalue      |
+  |       in2           | 0000100000 (=32) |  0x020  |   stepnum       |
+  |       in3           | 0001000000 (=64) |  0x040  |   idstate       |
+  |       in4           | 0010000000 (=128) |  0x060  |   regwrite      |
+
 
 ## Slave Control
   Inputs: `BA[2:0]`,`CARD_SEL`,`WR_IN_N`  
   Outputs: `SACK_N`
   
-  `WR_IN_N` : when master wants to write => '0' / else (including read) => '1' 
-  `CARD_SEL` : when address `AI[9:0]`is available => '1' / else => '0'
-  `BA[2:0]` : the 3-bit identifier for the slave
+  `WR_IN_N` : when master wants to write => '0' / else (including read) => '1'  
+  `CARD_SEL` : when address `AI[9:0]`is available => '1' / else => '0'  
+  `BA[2:0]` : the 3-bit identifier for the slave (explanation above)  
+  
+  `SACK_N` : goes to '0' for 1 CC when read is finished \ else '1' 
 
 
 ## RAMx32
