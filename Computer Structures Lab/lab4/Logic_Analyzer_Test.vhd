@@ -187,22 +187,8 @@ BEGIN
 		wait for 200 ns;
 		
 		--we expect to get the same signal out since only PA[1:0] matters to the MUX
-		
-		
 		wait;
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-	
-	
       WAIT; -- will wait forever
    END PROCESS;
 -- *** End Test Bench - User Defined Section ***
