@@ -30,7 +30,7 @@ To access the 32 **word** (aka. addresses), we need to use `WA[4:0]` to access e
   * For the monitor-slave in HO3, we decided to use BA="000" as the ID of the slave.  
   Therefore, we set the following addresses for the corresponding input to the monitor slave  
   
-  | Monitor Slave Input | Address (Binary) | Address (Hex) | Name (for RESA) |
+  | Monitor Slave Input | AI[9:0] (Binary) | AI[9:0] (Hex) | Name (for RESA) |
   |---|---|---|---|
   |       in1           | 0000000000 (= 0 dec) |  0x000  |   ramvalue      |
   |       in2           | 0000100000 (=32) |  0x020  |   stepnum       |
@@ -78,6 +78,7 @@ All slaves share the same `WR_IN_N` and `CARD_SEL` signals, and that's why `BA[2
   
   
 ## Logic Analyzer
+  - stores each cycle of CPU output signals in each "slot" in the Logic Analyzer RAM  
 
 Input : `STEP_EN`, `IN_INIT`, `STOP_N`  
 Ouput : `DOUT[31:0]` , `STS[7:0]`
@@ -101,3 +102,66 @@ Output: `S_DOUT`,`S_ACK_OUT`
 ![Image of Monitoring Slave](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/monitor_slave-1.jpg)
 
 The test bench code is [here](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/lab4/Monitor_Slave_Test.vhd). It is commented with quite some details, and it corresponds with the screeshot above.
+
+# Reading the RESA Output
+
+## Slave Label and Graphic Label Configurations  
+```
+Label and addresses Report:
+CPU RAM Address: 0x40
+LA RAM Address: 0x0
+
+Slave Labels:
+laram @ 0x0
+STATUS @ 0x20
+stepnum @ 0x60
+regout @ 0x40
+
+Graphic Labels:
+ininit @ 0x1f
+stepen @ 0x1e
+state3 @ 0x3
+state2 @ 0x2
+state1 @ 0x1
+state0 @ 0x0
+stepnum4 @ 0x8
+stepnum3 @ 0x7
+stepnum2 @ 0x6
+stepnum1 @ 0x5
+stepnum0 @ 0x4
+regwrite4 @ 0xd
+regwrite3 @ 0xc
+regwrite2 @ 0xb
+regwrite1 @ 0xa
+regwrite0 @ 0x9
+
+Memory Labels:
+```
+Explanation:  
+`Label and addresses Report` and `Slave Labels` values are the AI[9:0], which corresponds to the partitioning mentioned above.  
+`Graphic Labels` are the indexing within the 32bit string output by `DOUT[31:0]` of the Logic Analyzer.  
+  
+```
+Slave Labels:
+laram = 0xc000101f
+Second “Step_En” sent
+STATUS = 0x0000a115
+stepnum = 0x00000002
+regout = 0x00000000
+
+Registers:
+R0  : 0x00000000 0x01010101 0x02020202 0x03030303
+R4  : 0x04040404 0x05050505 0x06060606 0x07070707
+R8  : 0x08080808 0x09090909 0x0a0a0a0a 0x0b0b0b0b
+R12 : 0x0c0c0c0c 0x0d0d0d0d 0x0e0e0e0e 0x0f0f0f0f
+R16 : 0x10101010 0x11111111 0x12121212 0x13131313
+R20 : 0x14141414 0x15151515 0x16161616 0x17171717
+R24 : 0x00000000 0x00000000 0x00000000 0x00000000
+R28 : 0x00000000 0x00000000 0x00000000 0x00000000
+```
+
+Explanation:  
+`laram`: Since we defined the slave label as `laram @ 0x0`, it reads the first 32bit string stored in Logic Analyzer's RAM.   
+From above, we set `ininit @ 0x1f` and `stepen @ 0x1e`, so when the CPU first starts, `ininit` and `stepen` are both '1', hence the '`c`' in the first `laram` MSB (Hex) output.  
+Since `state` was `f` during the inital stage of the CPU write operation, we get '`f`' on the LSB (Hex) output.
+
