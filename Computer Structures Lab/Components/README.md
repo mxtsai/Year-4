@@ -141,6 +141,7 @@ Memory Labels:
 `Label and addresses Report` and `Slave Labels` values are the AI[9:0], which corresponds to the partitioning mentioned above.  
 `Graphic Labels` are the indexing within the 32bit string output by `DOUT[31:0]` of the Logic Analyzer.  
 
+## Step Simulation Results
 from step 2 of a simulation
 ```vhdl
 Slave Labels:
