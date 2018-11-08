@@ -137,14 +137,14 @@ regwrite0 @ 0x9
 
 Memory Labels:
 ```
-Explanation:  
+**Explanation:**  
 `Label and addresses Report` and `Slave Labels` values are the AI[9:0], which corresponds to the partitioning mentioned above.  
 `Graphic Labels` are the indexing within the 32bit string output by `DOUT[31:0]` of the Logic Analyzer.  
-  
-```
+
+from step 2 of a simulation
+```vhdl
 Slave Labels:
 laram = 0xc000101f
-Second “Step_En” sent
 STATUS = 0x0000a115
 stepnum = 0x00000002
 regout = 0x00000000
@@ -160,8 +160,9 @@ R24 : 0x00000000 0x00000000 0x00000000 0x00000000
 R28 : 0x00000000 0x00000000 0x00000000 0x00000000
 ```
 
-Explanation:  
+**Explanation:**  
 `laram`: Since we defined the slave label as `laram @ 0x0`, it reads the first 32bit string stored in Logic Analyzer's RAM.   
 From above, we set `ininit @ 0x1f` and `stepen @ 0x1e`, so when the CPU first starts, `ininit` and `stepen` are both '1', hence the '`c`' in the first `laram` MSB (Hex) output.  
 Since `state` was `f` during the inital stage of the CPU write operation, we get '`f`' on the LSB (Hex) output.
+(and then we can examine every bit as given above to determine their values at etc...)  
 
