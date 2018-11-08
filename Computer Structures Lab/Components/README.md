@@ -4,8 +4,20 @@
 
 `Step_En` : will be '1' for one CC when master is about to begin a (set of) instruction \ else '0'  
 `In_Init` : will be '0' on the falling edge of `Step_En` \ will be '1' one CC after `ACK` signal is sent back from slave \ is '1' when idle  
+  
+### Design of Trivial Master (Handout 3)
+`cnt[31:0]` : whenever `Step_En` is '1' for one CC, counter inside `broja` will count for a certain amount of cycles. Its outputs a 32 bit string of counts (eg, `0x00000000`,`0x01010101`,`0x02020202`,`0x03030303`) and internally within Trivial Master, this 32 bit string is also known as `wide[31:0]`.  
 
+`reg_adr[4:0]` : only for READ  >> `state(3)=1` & `WE=0` for Master's RAM >> `reg_out[31:0]=RAM[reg_adr]`    
+  
+ 
+`reg_out[31:0]` : the value stored in the Master's 32x32bit RAM given address `ADD[4:0]` from `mux5bit`  
+`step_num[4:0]` : value output by the `step_counter` within the Master  
+`state[3:0]` : the state of the Master   
+`reg_write[4:0]` : the address in the Master's RAM that will be written to in the next CC  
 
+**Notice**
+ * When `Broja` writes to Master's RAM, `wide[31:0]` is being written to RAM's `D[31:0]` as data and `wide[4:0]` is written to `ADD[4:0]` as address. This means that the 32bit value of any of the 32 "slots" in the RAM holds information on both the value and the address at the time it was written to.     
 
 ## SDRAM Partitioning
 `AI[9:0]` is divided into : `BA[2:0]|PA[1:0]|WA[4:0]`  
