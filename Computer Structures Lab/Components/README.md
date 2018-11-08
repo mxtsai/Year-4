@@ -167,3 +167,5 @@ From above, we set `ininit @ 0x1f` and `stepen @ 0x1e`, so when the CPU first st
 Since `state` was `f` during the inital stage of the CPU write operation, we get '`f`' on the LSB (Hex) output.
 (and then we can examine every bit as given above to determine their values at etc...)  
 
+## Graphic Labels
+![Graphic Label Explanation](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/grap_lab.jpeg)
