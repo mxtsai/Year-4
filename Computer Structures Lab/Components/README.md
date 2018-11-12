@@ -80,7 +80,7 @@ All slaves share the same `WR_IN_N` and `CARD_SEL` signals, and that's why `BA[2
 ## Logic Analyzer
   - stores each cycle of CPU output signals in each "slot" in the Logic Analyzer RAM  
 
-Input : `STEP_EN`, `IN_INIT`, `STOP_N` ,`CLK`
+Input : `STEP_EN`, `IN_INIT`, `STOP_N` ,`CLK`  
 Ouput : `DOUT[31:0]` , `STS[7:0]`
 
 ![Image of Logic Analyzer](https://raw.githubusercontent.com/mxtsai/year4/master/Computer%20Structures%20Lab/Components/la.png)  
