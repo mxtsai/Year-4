@@ -3,6 +3,9 @@
 
 The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/CompLab_f_18I/](http://www.eng.tau.ac.il/~marko/CompLab_f_18I/)
 
+The summary of whatever is going on is [here](https://github.com/mxtsai/year4/tree/master/Computer%20Structures%20Lab/Components).  
+
+
 ## Environment Setup
 * Windows 10 
 * Xilink ISE Design Suite 14.7 (Win7 version)
@@ -24,5 +27,5 @@ The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/Comp
   | --- | --- | --- |
   |       in1           |  0x000  |   laram      |
   |       in2           |  0x020  |   STATUS     |
-  |       in3           |  0x040  |   stepnum    |
-  |       in4           |  0x060  |   regout     |
+  |       in3           |  0x040  |   regout    |
+  |       in4           |  0x060  |   stepnum     |
