@@ -1,7 +1,4 @@
-# CPU Design
-- covers the general idea behind CPU design rules in our lab 
-
-## I/O Design
+# General CPU I/O Design
 Input:  `CLK`,`RESET`,`STEP_EN`,`ACK_N`,`DIN[31:0]`  
 Output:  `DOUT[31:0]`,`ADD[31:0]`  
 
@@ -16,7 +13,7 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
 `DOUT[31:0]` -  [READ] the data that was just read from `DIN[31:0]`, but outputted during `Loaded` state  | [WRITE] the data that is going to be write into `ADD[31:0]` 
 
 
-## Load Store Machine 
+# Load Store Machine 
   - consists of 2 main parts:  
     **1. Control Module** which consists of *State Control (SC)* and *Memory Address Control (MAC)*  
     **2. Datapath Module**
@@ -24,14 +21,20 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
     Input:  `CLK`,`RESET`,`STEP_EN`,`ACK_N`,`DIN[31:0]`  
     Output:  `DOUT[31:0]`,`ADD[31:0]`,`MAC_STATE[1:0]`,`ST_CONT_STATE[2:0]`    
   
-### Memory Address Control (MAC)
+## Memory Address Control (MAC)
 In charge of interfacing between the `State Control` and the `I/O Control Logic`    
   * Input:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
-  * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)
+  * Internal: `REQ`
+  * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)  
+  
+  
+  
+  ![image](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/mac_sim.jpg?raw=true)
+  [Memory Address Control - VHDL](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/Memory_Access_Machine.vhd)
+  [MAC_Sim Test Bench](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/MAC_Test.vhd)
 
-
-### State Control (SC)
+## State Control (SC)
 Controls the different transition states in the `Load/Store Machine`  
 
-### Datapath Module 
+## Datapath Module 
 Deals with the data IO of the `Load/Store Machine`  
