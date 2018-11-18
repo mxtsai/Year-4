@@ -26,7 +26,7 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
   
 ### Memory Address Control
 in charge of interfacing between the CPU and the `I/O Control Logic`    
-    **Input**:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC)  
+    **Input**:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
     **Output**:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)
 
 
