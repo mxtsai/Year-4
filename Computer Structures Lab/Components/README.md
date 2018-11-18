@@ -89,6 +89,7 @@ Notice:
   1. `cnt_o[4:0]` is still '0' on the falling edge of `in_init` and `step_en`, so writing to RAM starts at address '0'
   2. `STS[7:0]` (STATUS signal) is "000" & `counter[4:0]` concatentated 
   3. In this above example, '10' is being written into RAM[6] (ending of STOP_N)  
+  4. When`STOP_N` is active, the Logic Analyzer doesn't store any new information since internal signal `LA_WE` is off (it is an 'And' of `LA_RUN` and `STOP_N`)  
   
 ## Monitoring Slave
 
