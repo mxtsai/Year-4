@@ -22,11 +22,11 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
     **2. Datapath Module**
     
     Input:  `CLK`,`RESET`,`STEP_EN`,`ACK_N`,`DIN[31:0]`  
-    Output:  `DOUT[31:0]`,`ADD[31:0]`   
+    Output:  `DOUT[31:0]`,`ADD[31:0]`,`MAC_STATE[1:0]`   
   
 ### Memory Address Control
 in charge of interfacing between the CPU and the `I/O Control Logic`    
     **Input**:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC)  
-    **Output**:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`](MAC > IO Log)  
+    **Output**:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)
 
 
