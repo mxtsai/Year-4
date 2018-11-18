@@ -28,7 +28,7 @@ In charge of interfacing between the `State Control` and the `I/O Control Logic`
   * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)  
   
   | States Name | Binary Value | Description |
-  |---|---|
+  |---|---|---|
   |       WAIT4REQ           | 11 | Trigger(enters next state) by internal `REQ` signal |
   |       WAIT4ACK           | 00 | Trigger by signal 'ACK_N' |
   |       NEXT           | 01 | Just one CC after `WAIT4ACK` |
