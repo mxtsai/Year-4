@@ -13,4 +13,4 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
 `DIN[31:0]` - [only for READ] returns data coming from slave (through the `IO Logic Control`)    
   
 `ADD[31:0]` - [READ] the address in `SDRAM` to *read from* | [WRITE] the address in `SDRAM` to *write to*    
-`DOUT[31:0]` -  [READ] the data that was just read from `DIN[31:0]`, but outputted during `Loaded` state  | [WRITE] the data that is going to be written into `ADD[31:0]` 
+`DOUT[31:0]` -  [READ] the data that was just read from `DIN[31:0]`, but outputted during `Loaded` state  | [WRITE] the data that is going to be write into `ADD[31:0]` 
