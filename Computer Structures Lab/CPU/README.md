@@ -24,13 +24,18 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
 ## Memory Address Control (MAC)
 In charge of interfacing between the `State Control` and the `I/O Control Logic`    
   * Input:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
-  * Internal: `REQ`
+  * Internal: `REQ = OR(MR,MW)`  
   * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)  
   
-  
+  | States Name | Binary Value | Description |
+  |---|---|
+  |       WAIT4REQ           | 11 | Trigger(enters next state) by internal `REQ` signal |
+  |       WAIT4ACK           | 00 | Trigger by signal 'ACK_N' |
+  |       NEXT           | 01 | Just one CC after `WAIT4ACK` |
+
   
   ![image](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/mac_sim.jpg?raw=true)
-  [Memory Address Control - VHDL](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/Memory_Access_Machine.vhd)
+  [Memory Address Control - VHDL](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/Memory_Access_Machine.vhd)  
   [MAC_Sim Test Bench](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/MAC_Test.vhd)
 
 ## State Control (SC)
