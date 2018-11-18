@@ -24,9 +24,14 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
     Input:  `CLK`,`RESET`,`STEP_EN`,`ACK_N`,`DIN[31:0]`  
     Output:  `DOUT[31:0]`,`ADD[31:0]`,`MAC_STATE[1:0]`,`ST_CONT_STATE[2:0]`    
   
-### Memory Address Control
-in charge of interfacing between the CPU and the `I/O Control Logic`    
-    **Input**:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
-    **Output**:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)
+### Memory Address Control (MAC)
+In charge of interfacing between the `State Control` and the `I/O Control Logic`    
+  * Input:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
+  * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,'STOP_N'](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)
 
 
+### State Control (SC)
+Controls the different transition states in the `Load/Store Machine`  
+
+### Datapath Module 
+Deals with the data IO of the `Load/Store Machine`  
