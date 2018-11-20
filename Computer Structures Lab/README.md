@@ -3,7 +3,7 @@
 
 The resources for this lab are available : [http://www.eng.tau.ac.il/~marko/CompLab_f_18I/](http://www.eng.tau.ac.il/~marko/CompLab_f_18I/)
 
-The summary of whatever is going on is [here](https://github.com/mxtsai/year4/tree/master/Computer%20Structures%20Lab/Components).  
+The summary of whatever is going on is [here](https://mxtsai.github.io/Year-4/Computer%20Structures%20Lab/Components/).  
 
 
 ## Environment Setup
