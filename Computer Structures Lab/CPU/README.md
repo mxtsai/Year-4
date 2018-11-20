@@ -40,6 +40,9 @@ In charge of interfacing between the `State Control` and the `I/O Control Logic`
 
 ## State Control (SC)
 Controls the different transition states in the `Load/Store Machine`  
+   * Input: []  
+   * Ouput: [`pc_ce`,`pc_rst`](SC > PC Env), `add_mux_sel`
 
 ## Datapath Module 
 Deals with the data IO of the `Load/Store Machine`  
+   * Input: [`pc_ce`,`pc_rst`]()
