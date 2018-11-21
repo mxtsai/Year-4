@@ -29,9 +29,9 @@ In charge of interfacing between the `State Control` and the `I/O Control Logic`
   
   | States Name | Binary Value | Description |
   |---|---|---|
-  |       WAIT4REQ           | 11 | Trigger(enters next state) by internal `REQ` signal |
-  |       WAIT4ACK           | 00 | Trigger by signal 'ACK_N' |
-  |       NEXT           | 01 | Just one CC after `WAIT4ACK` |
+  |       WAIT4REQ           | 00 | Trigger(enters next state) by internal `REQ` signal |
+  |       WAIT4ACK           | 01 | Trigger by signal 'ACK_N' |
+  |       NEXT           | 10 | Just one CC after `WAIT4ACK` |
 
   
   ![image](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/macsim.jpg?raw=true)
