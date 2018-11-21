@@ -63,6 +63,7 @@ All slaves share the same `WR_IN_N` and `CARD_SEL` signals, and that's why `BA[2
   `Outputs: do[31:0]`
   
   Principles:
+  * **First output `RAM[ add[4:0]]` then write into `RAM[ add[4:0]]` if `WE=1`**
   * RAM takes in address `add[4:0]` on the rising edge of CLK
   * `do[31:0]` is the output of `RAM[ add [4:0] ]` (`add[4:0]` from above)
   
