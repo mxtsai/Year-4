@@ -33,29 +33,34 @@ entity Memory_Access_Machine is
     Port ( clk : in  STD_LOGIC;
            mr : in  STD_LOGIC := '0';
            mw : in  STD_LOGIC := '0';
-           ackn : in  STD_LOGIC := '0';
+           ack : in  STD_LOGIC := '0';
 			  reset : in STD_LOGIC := '0';
            busy : out  STD_LOGIC := '0';
            asn : out  STD_LOGIC := '1';
            wrn : out  STD_LOGIC := '1';
-           mac_state : out  STD_LOGIC_VECTOR (1 downto 0) := "11");
+			  stopn : out STD_LOGIC := '1';
+           mac_state : out  STD_LOGIC_VECTOR (1 downto 0) := "00");
 end Memory_Access_Machine;
 
 architecture Behavioral of Memory_Access_Machine is
 
-signal stateMAC : std_logic_vector(1 downto 0) := "11";
+signal stateMAC : std_logic_vector(1 downto 0) := "00";
 signal req : std_logic := '0';
+signal stopn_out : std_logic := '1';
 
-constant wait4req : std_logic_vector (1 downto 0) := "11";
-constant wait4ack : std_logic_vector (1 downto 0) := "00";
-constant nextState : std_logic_vector (1 downto 0) := "01";
+constant wait4req : std_logic_vector (1 downto 0) := "00";
+constant wait4ack : std_logic_vector (1 downto 0) := "01";
+constant nextState : std_logic_vector (1 downto 0) := "10";
 
 begin
 	
 	--non clock synced signals
 	req <= mr or mw; --internal request signal
-	busy <= req and not(ackn); --define busy output signal
+	busy <= req and not(ack); --define busy output signal
 	mac_state <= stateMAC; --output current state
+	
+	stopn <= '1' when ack = '1' else
+			stopn_out;
 
 	
 	main : process(clk)
@@ -67,7 +72,7 @@ begin
 				asn <= '1';
 				wrn <= '1';
 				stateMAC <= wait4req;
-
+				stopn_out <= '1';
 			end if;
 		
 			case stateMAC is
@@ -76,13 +81,19 @@ begin
 						stateMAC<= wait4ack; --updates state
 						asn <= '0'; --set assertion low (active)
 						wrn <= not(mw); --if writing, set low, else high
+						stopn_out <= '1';
 					end if;
 				
 				when wait4ack => -----------------------------------------------WAIT4ACK STATE
-					if ackn = '1' then 
+					if stopn_out = '1' and ack='0' then --only for the first cc after enter wait4ack state
+						stopn_out <= '0';
+					end if;
+					
+					if ack = '1' then 
 						stateMAC <= nextState;
 						asn <= '1'; --reset the values
 						wrn <= '1'; 
+						stopn_out <= '1';
 					end if;
 				
 				when nextState=> -----------------------------------------------FINISHING STATE
