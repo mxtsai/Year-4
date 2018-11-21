@@ -45,7 +45,10 @@ Controls the different transition states in the `Load/Store Machine`
 
 ## Datapath Module 
 Deals with the data IO of the `Load/Store Machine`  
-   * Input: [`pc_ce`,`pc_rst`]()
+   * Input: `CLK`,`RESET`,`DIN[31:0]`,`REG_C_CE`,`REG_B_CE`,`IR_CE`,`GPR_WE`,`AO_SEL`,`PC_CE`  
+   * Output: `DOUT[31:0]`,`AOUT[31:0]`,`opcode(5:0)`,`GPR_DOUT(31:0)`,`pccnt(15:0)`  
+   
+![Datapath Desing](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/datap-1.jpg?raw=true)
    
 ### GPR Environment [Design]
   Input: `CLK`,`GPR_WE`,`C_ADR[4:0]`,`A_ADR[4:0]`,`B_ADR[4:0]`,`C[31:0]`  
