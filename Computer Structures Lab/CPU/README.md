@@ -23,9 +23,9 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
   
 ## Memory Address Control (MAC)
 In charge of interfacing between the `State Control` and the `I/O Control Logic`    
-  * Input:  [`CLK`,`MR`,`MW`](CPU > MAC), [`ACK_N`](IO Log > MAC), `RESET`
+  * Input:  [`CLK`,`MR`,`MW`](SC > MAC), [`ACK_N`](IO Log > MAC), `RESET`
   * Internal: `REQ = OR(MR,MW)`  
-  * Output:  [`BUSY`](MAC > CPU), [`AS_N`,`WR_N`,`STOP_N`](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)  
+  * Output:  `BUSY`(MAC > SC), [`AS_N`,`WR_N`,`STOP_N`](MAC > IO Log), `MAC_STATE[1:0]`(for monitoring)  
   
   | States Name | Binary Value | Description |
   |---|---|---|
