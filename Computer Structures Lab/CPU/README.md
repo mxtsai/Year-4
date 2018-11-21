@@ -34,7 +34,7 @@ In charge of interfacing between the `State Control` and the `I/O Control Logic`
   |       NEXT           | 01 | Just one CC after `WAIT4ACK` |
 
   
-  ![image](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/mac_sim.jpg?raw=true)
+  ![image](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/macsim.jpg?raw=true)
   [Memory Address Control - VHDL](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/Memory_Access_Machine.vhd)  
   [MAC_Sim Test Bench](https://github.com/mxtsai/year4/blob/master/Computer%20Structures%20Lab/CPU/MAC_Test.vhd)
 
