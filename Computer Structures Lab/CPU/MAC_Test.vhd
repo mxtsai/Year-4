@@ -44,11 +44,12 @@ ARCHITECTURE behavior OF MAC_Test IS
          clk : IN  std_logic;
          mr : IN  std_logic;
          mw : IN  std_logic;
-         ackn : IN  std_logic;
+         ack : IN  std_logic;
 			reset : IN std_logic;
          busy : OUT  std_logic;
          asn : OUT  std_logic;
          wrn : OUT  std_logic;
+			stopn : OUT std_logic;
          mac_state : OUT  std_logic_vector(1 downto 0)
         );
     END COMPONENT;
@@ -58,7 +59,7 @@ ARCHITECTURE behavior OF MAC_Test IS
    signal clk : std_logic := '0';
    signal mr : std_logic := '0';
    signal mw : std_logic := '0';
-   signal ackn : std_logic := '0';
+   signal ack : std_logic := '0';
 	signal reset : std_logic := '0';
 
  	--Outputs
@@ -66,6 +67,7 @@ ARCHITECTURE behavior OF MAC_Test IS
    signal asn : std_logic;
    signal wrn : std_logic;
    signal mac_state : std_logic_vector(1 downto 0);
+	signal stopn : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 200 ns;
@@ -77,11 +79,12 @@ BEGIN
           clk => clk,
           mr => mr,
           mw => mw,
-          ackn => ackn,
+          ack => ack,
 			 reset => reset,
           busy => busy,
           asn => asn,
           wrn => wrn,
+			 stopn => stopn,
           mac_state => mac_state
         );
 
@@ -107,9 +110,9 @@ BEGIN
 		mr<='1'; --send read signal
 		wait for 3*200ns;
 		
-		ackn<='1'; --return ack signal for 1 cc
+		ack<='1'; --return ack signal for 1 cc
 		wait for 200ns;
-		ackn<='0';
+		ack<='0';
 		
 		mr<='0';
 		
@@ -119,9 +122,9 @@ BEGIN
 		mw<='1'; --send write signal
 		wait for 3*200ns;
 		
-		ackn<='1'; --return ack signal for 1 cc
+		ack<='1'; --return ack signal for 1 cc
 		wait for 200ns;
-		ackn<='0';
+		ack<='0';
 		
 		mw<='0';
 		
