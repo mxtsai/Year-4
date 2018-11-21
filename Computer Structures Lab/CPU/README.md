@@ -46,3 +46,13 @@ Controls the different transition states in the `Load/Store Machine`
 ## Datapath Module 
 Deals with the data IO of the `Load/Store Machine`  
    * Input: [`pc_ce`,`pc_rst`]()
+   
+### GPR Environment 
+  Input: `CLK`,`GPR_WE`,`C_ADR[4:0]`,`A_ADR[4:0]`,`B_ADR[4:0]`,`C[31:0]`  
+  Output: `A_OUT[31:0]`,`B_OUT[31:0]`,`D_OUT[31:0]`,`AEQZ`  
+  
+  ![GPR_Design](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/gpr1.jpg?raw=true)
+  Notice:
+  1. For `C_ADR[4:0] = "00000"`, we have `Register[0]` from the GPR selected. We cannot write into this register as it is reserved for zeros.  
+  2. When `GPR_WE=1`, we are writing into `Register[ C_ADR[4:0] ]`, and the value prior to writing will be sent out on from the GPR but since we are writing, the previous value isn't of significance.  
+  
