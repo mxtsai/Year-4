@@ -56,5 +56,5 @@ Deals with the data IO of the `Load/Store Machine`
   1. For `C_ADR[4:0] = "00000"`, we have `Register[0]` from the GPR selected. We cannot write into this register as it is reserved for zeros.  
   2. When `GPR_WE=1`, we are writing into `Register[ C_ADR[4:0] ]`, and the value prior to writing will be sent out on from the GPR but since we are writing, the previous value isn't of significance.  
 
-#### IR Environemtn [Design]
+#### IR Environment [Design]
 ![IR Env](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/irenv-1.jpg?raw=true)
