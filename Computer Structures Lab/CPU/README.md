@@ -19,7 +19,14 @@ Output:  `DOUT[31:0]`,`ADD[31:0]`
     **2. Datapath Module**
     
     Input:  `CLK`,`RESET`,`STEP_EN`,`ACK_N`,`DIN[31:0]`  
-    Output:  `DOUT[31:0]`,`ADD[31:0]`,`MAC_STATE[1:0]`,`ST_CONT_STATE[2:0]`    
+    Output:  `AD_OUT[31:0]`,`DT_OUT[31:0]`,`MAC_STATE[1:0]`,`CTL_STATE[2:0]`,[`GPR_OUT[31:0]`,`PC_COUNT[15:0]`,`WRN`,`ASN`,`STOPN`](to IO LOGIC),`IN_INIT` (to RESA)       
+    
+    **Internal Schematics of Load Store Machine** 
+    ![schematic_view](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/lsmachine.jpg?raw=true)  
+    
+    **Connection to IO Simulator**  
+    ![connection](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/IOSIM_LDST-1.jpg?raw=true)  
+    
   
 ## Memory Address Control (MAC)
 In charge of interfacing between the `State Control` and the `I/O Control Logic`    
@@ -40,10 +47,22 @@ In charge of interfacing between the `State Control` and the `I/O Control Logic`
 
 ## State Control (SC)
 Controls the different transition states in the `Load/Store Machine`  
-   * Input: []  
-   * Ouput: [`pc_ce`,`pc_rst`](SC > PC Env), `add_mux_sel`
+   * Input: `CLK`,`STEPEN`,`RESET`,[`BUSY`](from MAC), [`OPCODE[5:0]`](from DP)   
+   * Ouput: `CTL_STATE(2:0)`,`IN_INIT`,[`MR`,`MW`](to MAC),[`IR_CE`,`GPR_WE`,`PC_CE`,`AO_SEL`,`REG_C_CE`,`REG_B_CE`](to DP)  
+       
+  | States Name | Binary Value | Description |
+  |---|---|---|
+  |       INIT           | 000 | Trigger(enters next state) by `STEP_EN` signal |
+  |       FETCH           | 001 | Trigger by signal `BUSY` sent back from `MAC` |
+  |       DECODE           | 010 | Just one CC after `FETCH`, determine next state based on `opcode[5:0]` |
+  | STORE | 011 | Trigger by `BUSY` sent back from `MAC`|
+  | LOAD | 100 | Trigger by `BUSY` sent back from `MAC` |
+  | WBI | 101 | Just one CC after `LOAD` state |
+  | HALT | 111 | If opcode read is not recognized as load or store |
 
-## Datapath Module 
+   [State Control File](https://github.com/mxtsai/Year-4/blob/master/Computer%20Structures%20Lab/CPU/StateControl_LoadStore.vhd)
+
+## Datapath Module (DP)
 Deals with the data IO of the `Load/Store Machine`  
    * Input: `CLK`,`RESET`,`DIN[31:0]`,`REG_C_CE`,`REG_B_CE`,`IR_CE`,`GPR_WE`,`AO_SEL`,`PC_CE`  
    * Output: `DOUT[31:0]`,`AOUT[31:0]`,`opcode(5:0)`,`GPR_DOUT(31:0)`,`pccnt(15:0)`  
